@@ -21,3 +21,16 @@
 - Spring Security
 - Redis
 - Thymeleaf
+
+## Note
+
+### Spring Security
+
+Authentication (인증) -> Authorization (권한부여)
+
+이 Authentication이 어디에 보관되는가? : SecurityContext
+
+SecurityContext를 들고있는 녀석: SecurityContextHolder (ThreadLocal)
+
+- @EnableWebMVC
+- uri
