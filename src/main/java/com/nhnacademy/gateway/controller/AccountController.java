@@ -1,5 +1,6 @@
 package com.nhnacademy.gateway.controller;
 
+import com.nhnacademy.gateway.domain.dto.request.AccountLoginRequestDTO;
 import com.nhnacademy.gateway.domain.dto.request.AccountRegisterRequestDTO;
 import com.nhnacademy.gateway.service.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,22 @@ public class AccountController {
         accountService.registerAccountRequest(requestDTO);
 
         return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping(value = "accounts/login")
+    public ModelAndView loginPage() {
+        return new ModelAndView("/account/login");
+    }
+
+    @PostMapping(value = "accounts/login")
+    public ModelAndView login(@ModelAttribute AccountLoginRequestDTO requestDTO) {
+        accountService.loginAccountRequest(requestDTO);
+
+        return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping(value = "accounts/test")
+    public ModelAndView test() {
+        return new ModelAndView("/account/test");
     }
 }
