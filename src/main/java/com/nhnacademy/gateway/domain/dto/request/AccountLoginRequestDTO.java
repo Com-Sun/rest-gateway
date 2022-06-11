@@ -13,4 +13,8 @@ public class AccountLoginRequestDTO {
     @NotBlank(message = "아이디가 공백으로 인한 에러")
     private String accountId;
 
+    @NotBlank(message = "비밀번호가 공백으로 인한 에러")
+    private String accountPwd;
+
+
 }
