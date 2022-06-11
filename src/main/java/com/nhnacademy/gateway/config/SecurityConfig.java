@@ -21,7 +21,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/", "accounts/login", "accounts/register").permitAll()
+                .antMatchers("/", "/accounts/login", "/accounts/register")
+                .permitAll()
+                .antMatchers("/accounts/test").authenticated()
+            .and()
+                .formLogin()
+                .loginPage("/accounts/login")
+                .usernameParameter("accountId")
+                .passwordParameter("accountPwd")
+            .loginProcessingUrl("accounts/login")
             .and()
             .csrf()
             .disable();

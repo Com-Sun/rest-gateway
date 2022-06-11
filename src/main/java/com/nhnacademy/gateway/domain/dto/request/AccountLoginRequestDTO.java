@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class AccountRegisterRequestDTO {
+public class AccountLoginRequestDTO {
     @NotBlank(message = "아이디가 공백으로 인한 에러")
     private String accountId;
 

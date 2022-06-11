@@ -34,3 +34,4 @@ SecurityContext를 들고있는 녀석: SecurityContextHolder (ThreadLocal)
 
 - @EnableWebMVC
 - uri
+- implemente WebMvcConfigurer

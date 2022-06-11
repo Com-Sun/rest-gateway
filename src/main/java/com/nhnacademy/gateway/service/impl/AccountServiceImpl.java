@@ -1,5 +1,6 @@
 package com.nhnacademy.gateway.service.impl;
 
+import com.nhnacademy.gateway.domain.dto.request.AccountLoginRequestDTO;
 import com.nhnacademy.gateway.domain.dto.request.AccountRegisterRequestDTO;
 import com.nhnacademy.gateway.domain.dto.response.AccountResponseDTO;
 import com.nhnacademy.gateway.service.AccountService;
@@ -39,9 +40,25 @@ public class AccountServiceImpl implements AccountService {
             new ParameterizedTypeReference<AccountResponseDTO>() {
             });
 
-        log.info("나와라~~~~~~~~~~~~~~ = {}" + response.getStatusCode());
+        log.info("나와라~~~~~~~~~~~~~~ = {}", response.getBody());
 
         return response.getBody();
 
+    }
+
+    @Override
+    public AccountResponseDTO loginAccountRequest(AccountLoginRequestDTO requestDTO) {
+        requestDTO.setAccountPwd(passwordEncoder.encode(requestDTO.getAccountPwd()));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<AccountLoginRequestDTO> httpEntity = new HttpEntity<>(requestDTO, headers);
+        ResponseEntity<AccountResponseDTO> response = restTemplate.exchange(BASE_URL + "/accounts/login",
+            HttpMethod.POST,
+            httpEntity,
+            new ParameterizedTypeReference<AccountResponseDTO>(){});
+
+        log.info("나와ㅏ라~~~~~~~~~~~~~~~ = {}", response.getBody());
+        return response.getBody();
     }
 }
