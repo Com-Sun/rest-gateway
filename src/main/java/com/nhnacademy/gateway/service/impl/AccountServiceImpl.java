@@ -48,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountResponseDTO loginAccountRequest(AccountLoginRequestDTO requestDTO) {
-        requestDTO.setAccountPwd(passwordEncoder.encode(requestDTO.getAccountPwd()));
+//        requestDTO.setAccountPwd(passwordEncoder.encode(requestDTO.getAccountPwd()));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
