@@ -1,9 +1,12 @@
 package com.nhnacademy.gateway.service.impl;
 
 import com.nhnacademy.gateway.domain.dto.request.AccountRegisterRequestDTO;
+import com.nhnacademy.gateway.domain.dto.response.AccountResponseDTO;
 import com.nhnacademy.gateway.service.AccountService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,15 +26,22 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void registerAccountRequest(AccountRegisterRequestDTO requestDTO) {
+    public AccountResponseDTO registerAccountRequest(AccountRegisterRequestDTO requestDTO) {
         requestDTO.setAccountPwd(passwordEncoder.encode(requestDTO.getAccountPwd()));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<AccountRegisterRequestDTO> httpEntity = new HttpEntity<>(requestDTO, headers);
-        ResponseEntity<String> response = restTemplate.exchange(BASE_URL + "/accounts", HttpMethod.POST, httpEntity, String.class);
+        ResponseEntity<AccountResponseDTO> response = restTemplate.exchange(BASE_URL + "/accounts",
+            HttpMethod.POST,
+            httpEntity,
+            new ParameterizedTypeReference<AccountResponseDTO>() {
+            });
 
-        log.info("나와라~~~~~~~~~~~~~~ = {}" + response.getBody());
+        log.info("나와라~~~~~~~~~~~~~~ = {}" + response.getStatusCode());
+
+        return response.getBody();
+
     }
 }
