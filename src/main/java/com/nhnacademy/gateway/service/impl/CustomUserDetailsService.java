@@ -30,11 +30,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-//    private final RestTemplate restTemplate;
-//
-//    private static final String BASE_URL = "http://localhost:8090";
     private final AccountService accountService;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
