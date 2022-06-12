@@ -17,35 +17,33 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
 @EnableWebSecurity(debug = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+@Configuration
+public class SecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/accounts/login", "/accounts/register")
-                .permitAll()
-                .antMatchers("/accounts/test").authenticated()
+            .antMatchers("/", "/accounts/login", "/accounts/register")
+            .permitAll()
+            .antMatchers("/accounts/test").authenticated()
             .and()
-                .formLogin()
-                .loginPage("/accounts/login")
-                .usernameParameter("accountId")
-                .passwordParameter("accountPwd")
-                .loginProcessingUrl("/accounts/login")
+            .formLogin()
+            .loginPage("/accounts/login")
+            .usernameParameter("accountId")
+            .passwordParameter("accountPwd")
+            .loginProcessingUrl("/accounts/login")
             .and()
-                .oauth2Login()
-                .clientRegistrationRepository(clientRegistrationRepository())
-                .authorizedClientService(authorizedClientService())
+            .oauth2Login()
+            .clientRegistrationRepository(clientRegistrationRepository())
+            .authorizedClientService(authorizedClientService())
             .and()
-                .csrf()
+            .csrf()
             .disable();
-    }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider(null));
+        return http.build();
     }
 
     @Bean
@@ -60,16 +58,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return new BCryptPasswordEncoder();
     }
 
-//    github OAuth2 구현
+    //    github OAuth2 구현
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
         return new InMemoryClientRegistrationRepository(github());
     }
 
-   @Bean
-   public OAuth2AuthorizedClientService authorizedClientService() {
+    @Bean
+    public OAuth2AuthorizedClientService authorizedClientService() {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
-   }
+    }
 
     private ClientRegistration github() {
         return CommonOAuth2Provider.GITHUB.getBuilder("github")
@@ -79,3 +77,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .build();
     }
 }
+
