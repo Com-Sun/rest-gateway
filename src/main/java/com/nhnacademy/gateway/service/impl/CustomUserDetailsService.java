@@ -1,5 +1,6 @@
 package com.nhnacademy.gateway.service.impl;
 
+import com.nhnacademy.gateway.adapter.AccountAdapter;
 import com.nhnacademy.gateway.domain.SecurityUser;
 import com.nhnacademy.gateway.domain.dto.request.AccountLoginRequestDTO;
 import com.nhnacademy.gateway.domain.dto.response.AccountResponseDTO;
@@ -30,7 +31,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final AccountService accountService;
+    private final AccountAdapter accountAdapter;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,15 +39,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(simpleGrantedAuthority);
 
-        AccountResponseDTO response = accountService.loginAccountRequest(new AccountLoginRequestDTO(username, ""));
+        AccountResponseDTO response = accountAdapter.loginAccount(new AccountLoginRequestDTO(username, ""));
         SecurityUser securityUser = new SecurityUser(response.getAccountId(),
             response.getAccountPwd(), authorities, response.getAccountMail());
 
         Authentication
-            authentication = new UsernamePasswordAuthenticationToken(securityUser, "USER_PASSWORD", authorities);
+            authentication = new UsernamePasswordAuthenticationToken(securityUser, securityUser.getPassword(), authorities);
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
         return securityUser;
     }
+
 }
