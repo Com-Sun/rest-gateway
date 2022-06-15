@@ -1,8 +1,8 @@
 package com.nhnacademy.gateway.service;
 
-import com.nhnacademy.gateway.domain.dto.request.AccountLoginRequestDTO;
-import com.nhnacademy.gateway.domain.dto.request.AccountRegisterRequestDTO;
-import com.nhnacademy.gateway.domain.dto.response.AccountResponseDTO;
+import com.nhnacademy.gateway.domain.dto.account.request.AccountLoginRequestDTO;
+import com.nhnacademy.gateway.domain.dto.account.request.AccountRegisterRequestDTO;
+import com.nhnacademy.gateway.domain.dto.account.response.AccountResponseDTO;
 
 public interface AccountService {
     AccountResponseDTO registerAccountRequest(AccountRegisterRequestDTO requestDTO);

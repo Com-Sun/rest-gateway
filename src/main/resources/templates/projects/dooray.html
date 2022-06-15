@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>프로젝트 번호</th>
+        <th>프로젝트 이름</th>
+        <th>프로젝트 상태</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.projectNum}"></td>
+        <td th:text="${project.projectName}"></td>
+        <td th:onclick="'location.href=\''+ @{|projects/${project.projectNum}|}+ '\''" style="color: blue">게시글로이동</td>
+        <td th:text="${project.projectStatus}"></td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>

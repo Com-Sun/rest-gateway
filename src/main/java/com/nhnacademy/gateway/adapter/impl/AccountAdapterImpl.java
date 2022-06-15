@@ -1,8 +1,9 @@
 package com.nhnacademy.gateway.adapter.impl;
 
 import com.nhnacademy.gateway.adapter.AccountAdapter;
-import com.nhnacademy.gateway.domain.dto.request.AccountLoginRequestDTO;
-import com.nhnacademy.gateway.domain.dto.response.AccountResponseDTO;
+import com.nhnacademy.gateway.domain.dto.account.request.AccountLoginRequestDTO;
+import com.nhnacademy.gateway.domain.dto.account.request.AccountRegisterRequestDTO;
+import com.nhnacademy.gateway.domain.dto.account.response.AccountResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class AccountAdapterImpl implements AccountAdapter {
 
-    private static final String BASE_URL = "http://localhost:8090";
+    private static final String BASE_URL = "http://localhost:8000";
     private final RestTemplate restTemplate;
     private final PasswordEncoder passwordEncoder;
 
@@ -37,7 +38,23 @@ public class AccountAdapterImpl implements AccountAdapter {
             httpEntity,
             new ParameterizedTypeReference<AccountResponseDTO>(){});
 
-        log.info("나와ㅏ라~~~~~~~~~~~~~~~ = {}", response.getBody());
+        return response.getBody();
+    }
+
+    @Override
+    public AccountResponseDTO registerAccount(AccountRegisterRequestDTO requestDTO) {
+        requestDTO.setAccountPwd(passwordEncoder.encode(requestDTO.getAccountPwd()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<AccountRegisterRequestDTO> httpEntity = new HttpEntity<>(requestDTO, headers);
+        ResponseEntity<AccountResponseDTO> response = restTemplate.exchange(BASE_URL + "/accounts",
+            HttpMethod.POST,
+            httpEntity,
+            new ParameterizedTypeReference<AccountResponseDTO>() {
+            });
+
         return response.getBody();
     }
 }

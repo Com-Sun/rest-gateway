@@ -1,8 +1,10 @@
 package com.nhnacademy.gateway.config;
 
 import com.nhnacademy.gateway.service.impl.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,14 +23,21 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity(debug = true)
 @Configuration
+@PropertySource("classpath:github.properties")
 public class SecurityConfig {
+
+    @Value("${github.clientId}")
+    private String clientId;
+
+    @Value("${github.clientSecret}")
+    private String clientsSecret;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
             .antMatchers("/", "/accounts/login", "/accounts/register")
             .permitAll()
-            .antMatchers("/accounts/test").authenticated()
+            .antMatchers("/projects/**").authenticated()
             .and()
             .formLogin()
             .loginPage("/accounts/login")
@@ -39,6 +48,7 @@ public class SecurityConfig {
             .oauth2Login()
             .clientRegistrationRepository(clientRegistrationRepository())
             .authorizedClientService(authorizedClientService())
+            .defaultSuccessUrl("/", true)
             .and()
             .csrf()
             .disable();
@@ -72,8 +82,8 @@ public class SecurityConfig {
     private ClientRegistration github() {
         return CommonOAuth2Provider.GITHUB.getBuilder("github")
             .userNameAttributeName("name")
-            .clientId("70755fa47ae807263541")
-            .clientSecret("d7602b2d0b2b35a94ffd34b766e31731f24303e6")
+            .clientId(clientId)
+            .clientSecret(clientsSecret)
             .build();
     }
 }
