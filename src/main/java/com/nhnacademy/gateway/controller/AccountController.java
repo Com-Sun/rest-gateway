@@ -1,7 +1,7 @@
 package com.nhnacademy.gateway.controller;
 
-import com.nhnacademy.gateway.domain.dto.request.AccountLoginRequestDTO;
-import com.nhnacademy.gateway.domain.dto.request.AccountRegisterRequestDTO;
+import com.nhnacademy.gateway.domain.dto.account.request.AccountLoginRequestDTO;
+import com.nhnacademy.gateway.domain.dto.account.request.AccountRegisterRequestDTO;
 import com.nhnacademy.gateway.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

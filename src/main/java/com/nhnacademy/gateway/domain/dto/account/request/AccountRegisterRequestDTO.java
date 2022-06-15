@@ -1,4 +1,4 @@
-package com.nhnacademy.gateway.domain.dto.request;
+package com.nhnacademy.gateway.domain.dto.account.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
+//TODO 이거 Builder 지우기 테스
 public class AccountRegisterRequestDTO {
     @NotBlank(message = "아이디가 공백으로 인한 에러")
     private String accountId;

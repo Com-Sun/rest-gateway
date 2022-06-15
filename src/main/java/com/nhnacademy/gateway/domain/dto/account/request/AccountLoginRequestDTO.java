@@ -1,4 +1,4 @@
-package com.nhnacademy.gateway.domain.dto.request;
+package com.nhnacademy.gateway.domain.dto.account.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +15,5 @@ public class AccountLoginRequestDTO {
 
     @NotBlank(message = "비밀번호가 공백으로 인한 에러")
     private String accountPwd;
-
 
 }

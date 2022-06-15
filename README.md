@@ -35,3 +35,15 @@ SecurityContext를 들고있는 녀석: SecurityContextHolder (ThreadLocal)
 - @EnableWebMVC
 - uri
 - implemente WebMvcConfigurer
+
+### Session
+
+Http 는 상태를 유지하지 않는 프로토콜이다. 그렇기에, 요청자 정보를 식별하기 위해 Session을 사용한다.
+
+- 일반적으로 Http요청은 주소, 파라미터만 있을 뿐 내가 누구인지에 대한 정보는 없다.
+
+### Adapter
+
+- headers.setAccept() 
+- what is literal
+

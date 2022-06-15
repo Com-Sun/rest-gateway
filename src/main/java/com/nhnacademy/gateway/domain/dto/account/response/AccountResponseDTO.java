@@ -1,4 +1,4 @@
-package com.nhnacademy.gateway.domain.dto.response;
+package com.nhnacademy.gateway.domain.dto.account.response;
 
 import lombok.Getter;
 
