@@ -52,15 +52,20 @@ public class ProjectAdapterImpl implements ProjectAdapter {
         return projects.getBody();
     }
 
-    public ProjectResponseDTO readProject() {
+    @Override
+    public ProjectResponseDTO readProject(Long projectNum) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
         HttpEntity<ProjectResponseDTO> httpEntity = new HttpEntity<>(headers);
 
-//        ResponseEntity<ProjectResponseDTO> project = restTemplate.exchange(BASE_URL + "/projects" + )
-
-        return null;
+        ResponseEntity<ProjectResponseDTO> project = restTemplate.exchange(
+            BASE_URL + "/projects/" + projectNum,
+            HttpMethod.GET,
+            httpEntity,
+            new ParameterizedTypeReference<ProjectResponseDTO>() {
+            });
+        return project.getBody();
     }
 }

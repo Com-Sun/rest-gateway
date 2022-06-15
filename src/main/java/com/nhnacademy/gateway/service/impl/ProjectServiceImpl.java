@@ -25,4 +25,9 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectResponseDTO> readAllProjects() {
         return projectAdapter.readAllProjects();
     }
+
+    @Override
+    public ProjectResponseDTO readProject(Long projectNum) {
+        return projectAdapter.readProject(projectNum);
+    }
 }

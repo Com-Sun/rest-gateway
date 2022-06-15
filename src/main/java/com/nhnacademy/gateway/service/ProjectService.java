@@ -8,4 +8,6 @@ public interface ProjectService {
 
     ProjectResponseDTO createProject(ProjectCreateRequestDTO requestDTO);
     List<ProjectResponseDTO> readAllProjects();
+
+    ProjectResponseDTO readProject(Long projectNum);
 }

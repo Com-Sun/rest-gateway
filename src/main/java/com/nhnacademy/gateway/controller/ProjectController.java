@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,5 +35,13 @@ public class ProjectController {
         return mav;
     }
 
-//    @GetMapping(value = "projects")
+    @GetMapping(value = "projects/{projectNum}")
+    public ModelAndView readProject(@PathVariable Long projectNum) {
+
+        ModelAndView mav = new ModelAndView("projects/project");
+        ProjectResponseDTO project = projectService.readProject(projectNum);
+        mav.addObject("project", project);
+
+        return mav;
+    }
 }

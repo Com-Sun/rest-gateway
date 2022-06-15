@@ -7,4 +7,6 @@ import java.util.List;
 public interface ProjectAdapter {
     ProjectResponseDTO createProject(ProjectCreateRequestDTO requestDTO);
     List<ProjectResponseDTO> readAllProjects();
+
+    ProjectResponseDTO readProject(Long projectNum);
 }
